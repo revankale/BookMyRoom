@@ -1,0 +1,102 @@
+
+<div class="">
+  <div class="row mt-2">
+    <div [ngClass]="isSidePanelOpen?'col-8':'col-12'">
+      <div class="card">
+        <div class="card-header bg-dark d-flex justify-content-between">
+          <h6 class="text-light"><b>All Users</b></h6>
+          <button class="btn btn-sm btn-secondary" (click)="openSidePanel()">Add</button>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped table-hover table-bordered">
+            <thead class="bg-secondary text-light text-center">
+              <tr>
+                <th>Sr No</th>
+                <th>Client Name</th>
+                <th>Role</th>
+                <th>Username</th>
+                <th>User Password</th>
+                <th>IsActive</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of usersArray;let sr=index">
+                <td>{{sr+1}}</td>
+                <td>{{item.clientName}}</td>
+                <td>{{item.role}}</td>
+                <td>{{item.userName}}</td>
+                <td>{{item.userPassword}}</td>
+                <td>{{item.isActive}}</td>
+                <td class="text-center">
+                  <button class="btn btn-dark btn-sm mx-3" (click)="onEdit(item)">Edit</button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteUsers(item.userId)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-4" *ngIf="isSidePanelOpen">
+      <div class="card">
+        <div class="card-header bg-dark d-flex justify-content-between">
+          <h6 class="text-light"> Add Users</h6>
+          <button class="btn btn-sm btn-secondary" (click)="closeSidePanel()">Close</button>
+        </div>
+        <div class="card-body lh-lg">
+          <form>
+            <div class="row">
+              <div class="col-6" *ngIf="localData.role !== 'ClientAdmin'">
+                <label>Clients</label>
+                <select class="form-select" name="clientId" [(ngModel)]="userObj.clientId">
+                  <option value="0" disabled>Select Clients</option>
+                  <option [value]="item.clientId" *ngFor="let item of clientArray">{{item.clientName}}</option>
+                </select>
+              </div>
+
+              <div class="col-6">
+                <label>Role</label>
+                <select class="form-select" name="Role" [(ngModel)]="userObj.role">
+                  <option value="0" disabled>Select Role</option>
+                  <option value="ClientAdmin">ClientAdmin</option>
+                  <option value="ClientUser">ClientUser</option>
+                </select>
+              </div>
+
+              <div class="col-6">
+                <label class="">Username</label>
+                <input type="text" name="userName" class="form-control" placeholder="User Name"
+                  [(ngModel)]="userObj.userName">
+              </div>
+
+              <div class="col-6">
+                <label>Password</label>
+                <input type="text" name="userPassword" class="form-control" placeholder="User Password"
+                  [(ngModel)]="userObj.userPassword">
+              </div>
+
+              <div class="col-6">
+                <label>IsActive</label> <br>
+                <input type="checkbox" name="isActive" [(ngModel)]="userObj.isActive">
+              </div>
+
+              <div class="col-12 text-center mt-4">
+                <button type="button" class="btn btn-danger btn-sm mx-3" (click)="onReset()">Reset</button>
+                <button type="button" class="btn btn-dark btn-sm" *ngIf="userObj.userId == 0"
+                  (click)="addusers()">Save</button>
+                <button type="button" class="btn btn-dark btn-sm" *ngIf="userObj.userId !== 0"
+                  (click)="updateUsers()">Update</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

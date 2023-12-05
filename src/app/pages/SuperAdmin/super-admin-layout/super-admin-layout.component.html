@@ -1,0 +1,40 @@
+
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#37b6ba">
+    <div class="container-fluid my-container-fluid">
+      <a class="navbar-brand fw-bold d-lg-none" routerLink="sAdminDashboard">Dashboard</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <a class="navbar-brand fw-bold d-none d-lg-block" routerLink="sAdminDashboard">Dashboard</a>
+          <li class="nav-item">
+            <a class="nav-link active fw-semibold" aria-current="page" routerLink="createPackages">Create Packages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="creatUsersForClient">Create Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="activePackage">Active Package</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="createClient">Create Clients</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <span class="mx-4 mt-1 fw-bold"> <i class="fa-solid fa-user mx-2"></i>{{userName}}</span>
+          <button type="button" class="btn btn-danger btn-sm" (click)="logOut()">Log out</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>
+
+
+

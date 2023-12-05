@@ -1,0 +1,28 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#74ade2">
+    <div class="container-fluid my-container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <a class="navbar-brand fw-bold d-none d-lg-block" routerLink="cAdminDashboard">Dashboard</a>
+          <li class="nav-item">
+            <a class="nav-link active fw-semibold" aria-current="page" routerLink="creatRooms">Create Rooms</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active fw-semibold" aria-current="page" routerLink="Client-user">Create Users</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <span class="mx-4 mt-1 fw-bold"> <i class="fa-solid fa-user mx-2"></i>{{userName}}</span>
+          <button type="button" class="btn btn-danger btn-sm" (click)="logOut()">Log out</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</div>
+
+
+
+
+<div class="container-fluid">
+  <router-outlet></router-outlet>
+</div>

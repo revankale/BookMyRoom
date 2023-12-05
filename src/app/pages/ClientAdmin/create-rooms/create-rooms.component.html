@@ -1,0 +1,100 @@
+<!-- table code left side -->
+<div class="">
+  <div class="row mt-2">
+    <div [ngClass]="isSidePanalOpen? 'col-8': 'col-12'">
+      <div class="card">
+        <div class="card-header bg-dark d-flex justify-content-between">
+          <h6 class="text-light">All Rooms</h6>
+          <button class="btn btn-sm btn-secondary" (click)="showSidePanal()">Add</button>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped table-hover table-bordered">
+            <thead class="bg-secondary text-light text-center">
+              <tr>
+                <th>Sr.no</th>
+                <th>Room Name</th>
+                <th>Room Location</th>
+                <th>Room Seating Capacity</th>
+                <th>Is Room Active</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of roomArray;let sr=index">
+                <td>{{sr+1}}</td>
+                <td>{{item.roomName}}</td>
+                <!-- <td>{{item.clientName}}</td> -->
+                <td>{{item.roomLocation}}</td>
+                <td>{{item.roomSeatingCapacity}}</td>
+                <td>{{item.isRoomActive}}</td>
+                <td class="text-center">
+                  <button class="btn btn-dark btn-sm mx-3" (click)="onEdite(item)">Edit</button>
+                  <button class="btn btn-danger btn-sm" (click)="onDelete(item.roomId)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- form code right side -->
+
+    <div class="col-4" *ngIf="isSidePanalOpen">
+      <div class="card">
+        <div class="card-header bg-dark d-flex justify-content-between">
+          <h6 class="text-light">Add Rooms</h6>
+          <button class="btn btn-sm btn-secondary" (click)="closePanal()">Close</button>
+        </div>
+        <div class="card-body lh-lg">
+          <form #form="ngForm">
+            <div class="row">
+              <div class="col-6">
+                <label for="">Room Name</label>
+                <input type="text" name="Name" class="form-control" #name="ngModel" required
+                  [(ngModel)]="clientObj.roomName" placeholder="Room Name">
+                <div class="text-danger" *ngIf="name.touched">
+                  <span *ngIf="name.errors?.['required']">This filed is required</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <label for="">Room Location</label>
+                <input type="text" name="companyName" class="form-control" #companyName="ngModel" required
+                  [(ngModel)]="clientObj.roomLocation" placeholder="Room Location">
+                <div class="text-danger" *ngIf="companyName.touched">
+                  <span *ngIf="companyName.errors?.['required']">This filed is required</span>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <label for="">Room Seating Capacity</label>
+                <input type="text" name="City" class="form-control" #city="ngModel" required
+                  [(ngModel)]="clientObj.roomSeatingCapacity" placeholder="0">
+                <div class="text-danger" *ngIf="city.touched">
+                  <span *ngIf="city.errors?.['required']">This filed is required</span>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <label>Is Active</label> <br>
+                <input type="checkbox" name="isActive" [(ngModel)]="clientObj.isRoomActive">
+              </div>
+
+              <div class="col-12">
+                <div class="text-center mt-4">
+                  <button type="button" class="btn btn-danger btn-sm mx-3" (click)="onReset()">Reset</button>
+                  <button type="button" class="btn btn-dark btn-sm" [disabled]="form.invalid"
+                    *ngIf="clientObj.roomId == 0" (click)="onSaveRoom()">Save</button>
+                  <button type="button" class="btn btn-dark btn-sm" *ngIf="clientObj.roomId != 0"
+                    (click)="onUpdateClient()">Update</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

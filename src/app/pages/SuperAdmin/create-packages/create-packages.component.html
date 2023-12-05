@@ -1,0 +1,128 @@
+<!-- top button list and gridView -->
+
+<div class="py-3">
+  <button class="btn btn-sm btn-info" (click)="listView()">List View</button>
+  <button class="btn btn-sm btn-danger mx-2" (click)="gridView()">Grid View</button>
+</div>
+
+<!-- table code left side -->
+
+<div class="row" *ngIf="list">
+  <div [ngClass]="isSidePanelOpen?'col-8':'col-12'">
+    <div class="card">
+      <div class="card-header bg-dark d-flex justify-content-between">
+        <h6 class="text-light"><b>All Packages</b></h6>
+        <button class="btn btn-sm btn-secondary" (click)="openSidePanel()">Add</button>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped table-hover table-bordered">
+          <thead class="bg-secondary text-light text-center">
+            <tr>
+              <th>Sr No</th>
+              <th>Package Name</th>
+              <th>Package Description</th>
+              <th>Package Cost</th>
+              <th>Is Package Active</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of packageArray;let sr=index">
+              <td>{{sr+1}}</td>
+              <td>{{item.packageName}}</td>
+              <td>{{item.packageDescription}}</td>
+              <td>{{item.packageCost | currency:"INR"}}</td>
+              <td>{{item.isPackageActive}}</td>
+              <td class="text-center">
+                <button class="btn btn-dark btn-sm mx-3" (click)="onEdit(item)">Edit</button>
+                <button class="btn btn-danger btn-sm" (click)="deletePackages(item.packageId)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- form code right side -->
+
+  <div class="col-4" *ngIf="isSidePanelOpen">
+    <div class="card">
+      <div class="card-header bg-dark d-flex justify-content-between">
+        <h6 class="text-light"> Add Packages</h6>
+        <button class="btn btn-sm btn-secondary" (click)="closeSidePanel()">Close</button>
+      </div>
+      <div class="card-body lh-lg">
+        <form #form="ngForm">
+          <div class="row">
+            <div class="col-6">
+              <label>Name</label>
+              <input type="text" name="Name" class="form-control" #name="ngModel" required
+                [(ngModel)]="packageObj.packageName" placeholder="Package Name">
+              <div class="text-danger" *ngIf="name.touched">
+                <span *ngIf="name.errors?.['required']">This filed is required</span>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label>Description</label>
+              <input type="text" name="Description" class="form-control" #Description="ngModel" required
+                [(ngModel)]="packageObj.packageDescription" placeholder="Package Description">
+              <div class="text-danger" *ngIf="Description.touched">
+                <span *ngIf="Description.errors?.['required']">This filed is required</span>
+              </div>
+
+            </div>
+            <div class="col-6">
+              <label>Package Cost</label>
+              <input type="text" name="Cost" class="form-control" #Cost="ngModel" required
+                [(ngModel)]="packageObj.packageCost" placeholder="0">
+              <div class="text-danger" *ngIf="Cost.touched">
+                <span *ngIf="Cost.errors?.['required']">This filed is required</span>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="">Is Active</label> <br>
+              <input type="checkbox" name="isActive" [(ngModel)]="packageObj.isPackageActive">
+            </div>
+            <div class="col-12">
+              <div class="text-center mt-4">
+                <button type="button" class="btn btn-danger btn-sm mx-3" (click)="onReset()">Reset</button>
+                <button type="button" class="btn btn-dark btn-sm" (click)="addPackages()" [disabled]="form.invalid"
+                  *ngIf="packageObj.packageId == 0"> <span class="spinner-border spinner-border-sm" *ngIf="isApiCallInProgress" role="status" aria-hidden="true"></span> Save</button>
+                <button type="button" class="btn btn-dark btn-sm" (click)="updatePackages()"
+                  *ngIf="packageObj.packageId != 0">Update</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- card code (gridView) -->
+
+<div class="row" *ngIf="grid">
+  <div class="col-4" [ngClass]="list?'col-12':''" *ngFor="let item of packageArray">
+    <div class="card m-2 box-shadow">
+      <div class="card-body">
+        <div [ngClass]="list?'col-8':'col-12'">
+          <div class="text-start">
+            <p class="text-dark"><b>Name:</b> {{item.packageName}}</p>
+            <p class="text-dark"><b>Description:</b> {{item.packageDescription}}</p>
+            <p class="text-dark"><b>Cost:</b> {{item.packageCost | currency:"INR"}}</p>
+            <p class="text-dark" *ngIf="item.isPackageActive==true"><b>Is Active:</b> Yes</p>
+            <p class="text-dark" *ngIf="!item.isPackageActive"><b>Is Active:</b> No</p>
+            <div class="">
+              <button class="btn btn-dark btn-sm" (click)="onEdit(item)">Edit</button>
+              <button class="btn btn-danger btn-sm mx-1" (click)="deletePackages(item.packageId)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
